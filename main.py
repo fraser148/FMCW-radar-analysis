@@ -5,6 +5,8 @@ import numpy as np
 import warnings
 warnings.simplefilter("ignore", np.ComplexWarning)
 
+import statsmodels.api as sm
+
 
 c = 3e2
 
@@ -38,10 +40,10 @@ def FindDifference(t,f, stats ):
     for i, stat in enumerate(stats):
         mfreq = stat[1]
 
-        found = False
+        diff = 100000
         index = i
 
-        while (found == False and index > 0):
+        while (diff < 0.01 and index > 0):
             if (mfreq == f[index]):
                 time_deltas[i] = stat[0] - t[index]
                 found = True
@@ -72,13 +74,16 @@ distance = FindDifference(t,f,stats)
 
 stats = np.moveaxis(stats, 1,0)
 
+correlation = sm.tsa.stattools.ccf(stats[0], f, adjusted=False)
 
-
-plt.subplot(2,1, 1)
+plt.subplot(2, 2, 1)
 plt.plot(stats[0], stats[1])
 plt.plot(t,f)
 
-plt.subplot(2,1, 2)
+plt.subplot(2,2, 2)
 plt.plot(t, distance)
+
+plt.subplot(2,2, 3)
+plt.plot(t, correlation)
 
 plt.show()
