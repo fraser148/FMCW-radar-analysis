@@ -67,22 +67,25 @@ class AE(torch.nn.Module):
 
 # Model Initialization
 model = AE()
+print("model created")
  
 # Validation using MSE Loss function
 loss_function = torch.nn.MSELoss()
+print("loss function created")
  
 # Using an Adam Optimizer with lr = 0.1
 optimizer = torch.optim.Adam(model.parameters(),
                              lr = 1e-1,
                              weight_decay = 1e-8)
 
-epochs = 20
+print("optimizer created")
+
+epochs = 2
 outputs = []
 losses = []
 for epoch in range(epochs):
     print("Epoch:", epoch)
     for (image, _) in loader:
-        print("Image:")
 
         # Reshaping the image to (-1, 784)
         image = image.reshape(-1, 28*28)
