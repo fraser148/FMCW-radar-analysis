@@ -10,7 +10,8 @@ def load_radar(path : str):
   timestamps = raw_data[:, :8].copy().view(np.int64)
   azimuths = (raw_data[:, 8:10].copy().view(np.uint16) /float(encode_size) * 2 * np.pi).astype(np.float32)
   valid = raw_data[:, 10:11] == 255
-  fft_data = raw_data[:, 11:].astype(np.float32)[:, :, np.newaxis]/255
+  # fft_data = raw_data[:, 11:].astype(np.float32)[:, :, np.newaxis]/255
+  fft_data = raw_data[:, 11:].astype(np.float32)[:, :]/255
 
   return timestamps, azimuths, valid, fft_data, radar_resolution
 
