@@ -84,6 +84,7 @@ def play(dir):
     downsample_rate = 4
 
     fft_data_vis = fft_data[:, ::downsample_rate]
+    print(fft_data_vis.shape)
     resize_factor = float(cart_img.shape[0]) / float(fft_data_vis.shape[0])
     fft_data_vis = cv2.resize(fft_data_vis, (0, 0), None, resize_factor, resize_factor)
     vis = cv2.hconcat((fft_data_vis, fft_data_vis[:, :10] * 0 + 1, cart_img))

@@ -17,7 +17,8 @@ class RadarDataset(Dataset):
 
     filename = os.path.join(self.root, "radar", str(self.radar_timestamps[idx]) + '.png')
     timestamps, azimuths, valid, fft_data, radar_resolution = radar.load_radar(filename)
-    sample = fft_data
+    downsample = 4
+    sample = fft_data[:, ::downsample]
 
     if self.transform:
       sample = self.transform(sample)
